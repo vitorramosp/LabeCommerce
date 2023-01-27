@@ -1,105 +1,82 @@
 -- Active: 1673873440214@@127.0.0.1@3306
-CREATE Table users (
+
+CREATE TABLE users (
     id TEXT PRIMARY KEY UNIQUE NOT NULL,
+    name  TEXT NOT NULL,
     email TEXT UNIQUE NOT NULL,
-    password TEXT NOT NULL
+    password TEXT NOT NULL,
+    created_at TEXT DEFAULT(DATETIME()) NOT NULL
 );
 
-PRAGMA table_info ('users');
+CREATE TABLE products (
+  id  TEXT PRIMARY KEY UNIQUE NOT NULL,
+  name TEXT NOT NULL,
+  price REAL NOT NULL,
+  description TEXT NOT NULL,
+  image_url TEXT NOT NULL
+);
 
-INSERT INTO users (id, email, password)
-VALUES
-("i001", "vitor@email.com", "vitor123"),
-("i002", "guilherme@email.com", "guilherme123"),
-("i003", "marina@email.com", "mari123");
+CREATE TABLE purchases (
+    id TEXT PRIMARY KEY UNIQUE NOT NULL,
+    total_price REAL NOT NULL,
+    created_at TEXT DEFAULT(DATETIME()) NOT NULL,
+    paid INTEGER DEFAULT(0) NOT NULL,
+    buyer TEXT NOT NULL,
+    FOREIGN KEY (buyer) REFERENCES users(id)
+);
+
+CREATE TABLE purchases_products(
+    purchase_id TEXT NOT NULL,
+    product_id TEXT NOT NULL,
+    quantity INTEGER NOT NULL DEFAULT(1),
+    FOREIGN KEY (purchase_id) REFERENCES purchases(id)
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);
+
+INSERT INTO users (id, name, email, password)
+VALUES 
+    ("i001", "Vitor Ramos", "vitor@email.com", "vitor123!"), 
+    ("i002", "Guilherme Algusto", "Guilherme@email.com", "Gui123"), 
+    ("i003", "Gabriel Braga", "Gabriel@email.com", "gabriel123");
 
 SELECT * FROM users;
 
-CREATE TABLE products (
-    id TEXT PRIMARY KEY UNIQUE NOT NULL,
-    name TEXT NOT NULL,
-    price REAL NOT NULL,
-    category TEXT NOT NULL
-);
-
-PRAGMA table_info ('products');
-
-INSERT INTO products (id, name,price,category)
-VALUES
-("p001", "Tenis", 5.99, "vestuário"),
-("p002", "Arte da Guerra", 50, "livro"),
-("p003", "Camisa", 10.9, "vestuário"),
-("p004", "Celular", 110, "eletrônico"),
-("p005", "Doce", 32, "comida");
+INSERT INTO products (id, name, price, description, image_url)
+VALUES 
+    ("po01", "vestido", 85, "vestido azul curto", "http://..."), 
+    ("po02", "regata", 74.99, "blusa regata preta", "http://..."), 
+    ("po03", "shorts", 110, "shorts jeans", "http://..."), 
+    ("po04", "calça", 140, "calça de linho pantalona", "http://..."), 
+    ("po05", "camisa", 110, "camisa branca de linho", "http://...");
 
 SELECT * FROM products;
 
-SELECT * FROM products
-WHERE name LIKE "arte%";
-
-INSERT INTO users (id, email, password)
-VALUES
-("i004", "gabriel@email.com", "gabriel123");
-
-INSERT INTO products (id,name,price,category)
-VALUES
-("p006", "Narnia", 40, "livro");
-
-SELECT * FROM products
-WHERE id LIKE "p006";
-
-DELETE FROM users
-WHERE id LIKE 'i003';
-
-DELETE FROM products
-WHERE id LIKE 'p002';
-
-UPDATE users
-SET email = "novogui@email.com",
-    password = "novogui123"
-WHERE id = 'i001';
-
-UPDATE products
-SET price = 4.2,
-    name = 'camisa'
-WHERE id = 'p003';
-
-SELECT * FROM users
-ORDER BY id ASC;
-
-SELECT * FROM products
-ORDER BY price ASC
-LIMIT 20
-OFFSET 0;
-
-SELECT * FROM products
-WHERE price >= 10 AND price <= 70
-ORDER BY price ASC;
-
-CREATE TABLE purchases (
-    id TEXT PRIMARY KEY UNIQUE NOT NULL, 
-    total_price REAL UNIQUE NOT NULL, 
-    paid INTEGER NOT NULL, 
-    delivered_at TEXT, 
-    buyer_id TEXT NOT NULL, 
-    FOREIGN KEY (buyer_id) REFERENCES users(id)
-);
-
-INSERT INTO purchases (id, total_price, paid, delivered_at, buyer_id)
+INSERT INTO purchases (id, total_price, paid, buyer)
 VALUES 
-    ("p001", 100, 0, NULL, "i001"), 
-    ("p002", 35.9, 1, "2023-01-18", "i001"), 
-    ("p003", 40, 0, NULL, "i002"), 
-    ("p004", 78, 0, NULL, "i002"), 
-    ("p005", 99.99, 0, NULL, "i004"), 
-    ("p006", 25, 0, NULL, "i004");
+    ("pu01", 280, 1, "i001"), 
+    ("pu02", 85, 1, "i001"), 
+    ("pu03",74.99, 0, "i002" ), 
+    ("pu04", 110, 0, "i002"), 
+    ("pu05", 140, 1, "i003"), 
+    ("pu06", 85, 1, "i003");
 
-SELECT * FROM purchases
-INNER JOIN  users
-ON purchases.buyer_id = users.id
-WHERE users.id = "i004";
+SELECT * FROM purchases;
 
-UPDATE purchases
-SET delivered_at = DATETIME('now'),
-    paid = 1
-WHERE id = 'p006';
+INSERT INTO purchases_products (purchase_id, product_id, quantity)
+VALUES 
+    ("pu01", "po04", 2), 
+    ("pu02", "po01", 1), 
+    ("pu03", "po02", 1), 
+    ("pu04", "po05", 1), 
+    ("pu05", "po04", 1), 
+    ("pu06", "po01", 1);
+
+SELECT * FROM purchases_products;
+
+SELECT * FROM purchases_products
+INNER JOIN products 
+ON purchases_products.product_id = products.id
+INNER JOIN purchases 
+ON purchases_products.purchase_id = purchases.id
+INNER JOIN users
+ON purchases.buyer = users.id;
