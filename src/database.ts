@@ -1,6 +1,5 @@
 import { Category, TProduct, TPurchase, TUser } from "./types";
 
-
 export const users:TUser[] = [
     {
         id: "bananinha",
