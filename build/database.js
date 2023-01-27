@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.purchases = exports.products = exports.users = void 0;
+exports.getAllPurchasesFromUserId = exports.createPurchase = exports.queryProductsByName = exports.getProductsById = exports.getAllProducts = exports.createProduct = exports.getAllUsers = exports.createUser = exports.purchases = exports.products = exports.users = void 0;
+const types_1 = require("./types");
 exports.users = [
     {
         id: "bananinha",
@@ -18,13 +19,13 @@ exports.products = [
         id: "chocolate",
         name: "nestle",
         price: 4.90,
-        category: "doce"
+        category: types_1.Category.FOOD
     },
     {
         id: "bolo",
         name: "bolo de cenoura",
         price: 9.90,
-        category: "doce"
+        category: types_1.Category.FOOD
     }
 ];
 exports.purchases = [
