@@ -1,0 +1,24 @@
+{
+  "name": "labecommerce-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "tsc && node ./build/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vitorramosp/Labecommerce.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vitorramosp/Labecommerce/issues"
+  },
+  "homepage": "https://github.com/vitorramosp/Labecommerce",
+  "devDependencies": {
+    "typescript": "^4.9.4"
+  }
+}
