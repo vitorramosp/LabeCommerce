@@ -16,6 +16,7 @@ CREATE TABLE products (
   image_url TEXT NOT NULL
 );
 
+
 CREATE TABLE purchases (
     id TEXT PRIMARY KEY UNIQUE NOT NULL,
     total_price REAL NOT NULL,
@@ -43,11 +44,11 @@ SELECT * FROM users;
 
 INSERT INTO products (id, name, price, description, image_url)
 VALUES 
-    ("po01", "vestido", 85, "vestido azul curto", "http://..."), 
-    ("po02", "regata", 74.99, "blusa regata preta", "http://..."), 
-    ("po03", "shorts", 110, "shorts jeans", "http://..."), 
-    ("po04", "calça", 140, "calça de linho pantalona", "http://..."), 
-    ("po05", "camisa", 110, "camisa branca de linho", "http://...");
+    ("po01", "camiseta", 85, "Roupa", "http://..."), 
+    ("po02", "cueca", 74.99, "Roupa", "http://..."), 
+    ("po03", "shorts", 110, "Roupa", "http://..."), 
+    ("po04", "calça", 140, "Roupa", "http://..."), 
+    ("po05", "camisa", 110, "Roupa", "http://...");
 
 SELECT * FROM products;
 
