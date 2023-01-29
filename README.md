@@ -25,4 +25,4 @@ Este projeto é uma aplicação de comércio eletrônico construída com NodeJS,
 - DELETE /purchases/:id
 
 # Documentação da API
-Para mais detalhes sobre os endpoints e como utilizá-los, acesse a documentação da API no link: https://documenter.getpostman.com/view/24461248/2s935hPm
+Para mais detalhes sobre os endpoints e como utilizá-los, acesse a documentação da API no link: https://documenter.getpostman.com/view/24461248/2s935hPmPR
