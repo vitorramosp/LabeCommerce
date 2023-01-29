@@ -16,9 +16,8 @@ Este projeto é uma aplicação de comércio eletrônico construída com NodeJS,
 
 # Endpoints de Produtos
 - POST /products
-- GET /products/funcionalidade1
-- GET /products/:name/funcionalidade2
-- PATCH /products/:id
+- GET /products
+- PUT /products/:id
 
 # Endpoints de Compras
 - GET /purchases
